@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Table-Game-Portal</title>
+<!-- Mobile viewport optimized -->
+	<meta name="viewport" content="width=device-width">
+<!-- CSS -->
+    <link href="files/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+<!-- CSS Own -->
+<link href="style.css" rel="stylesheet" type="text/css" />
+<link href="style_mod.css" rel="stylesheet" type="text/css" />
+<!--Scripts-->
+ 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+ 	<script src="files/jquery-1.11.3.js" type="text/javascript"></script>
+ 	<script src="files/bootstrap.js" type="text/javascript"></script>
+
+ 	
+<!--My own Scripts-->
+ 	<script src="js/script.js" type="text/javascript"></script>
+
+
+<script>
+var socket = io.connect('/');
+
+//converting value to string
+var user = <%- JSON.stringify(user.local.email) %>;
+console.log(user);
+
+//on connect informs
+socket.on("connect",function(){
+	console.log('connected');
+	socket.emit('add-user', user);
+	checkConnections();
+});
+
+//listens for disconnection
+socket.on("disconnect",function(){
+	console.log('disconnected');
+});
+
+socket.on('clientList',function(userList){
+	console.log(userList);
+var keys = Object.keys(userList);
+	console.log(keys);
+})
+
+var checkConnections = function(){
+	socket.emit('user-list');
+}
+
+socket.on('update-list',function(list){
+	//transfering object into list of users
+
+
+console.log('working');
+var keys = Object.keys(list);
+    	var div = document.createElement("div");
+    	var element = document.getElementById("user_list_small");
+    	element.innerHTML = '';
+    	for(var i = 0; i <keys.length;i++){
+    		
+var para = document.createElement("h4");
+var node = document.createTextNode(keys[i]);
+para.appendChild(node);
+div.appendChild(para);
+
+
+
+    	}
+element.appendChild(div);
+
+});
+//~~~~~~~~~~~~~~~~~~~For Chat~~~~~~~~~~~~~#
+
+var sendMessage = function(){
+//assemble JSON to send
+var chatmsg = {};
+chatmsg.user = user;
+
+chatmsg.message = document.getElementById('chatMessage').value;
+
+socket.emit('messageToAll', chatmsg);
+document.getElementById('chatMessage').value = '';
+};
+
+socket.on('chatIncomingMessage',function(msg){
+	addMessage(msg);
+});
+
+//variable for different color messages
+var state;
+				
+
+
+				//if we would get the message, fire this one
+
+				
+var addMessage = function(messageObject){
+
+	//var elementt = document.getElementById("chat_small");
+
+	var div = document.createElement("div");
+
+	var user = document.createElement("h6");
+	var message = document.createElement("h6");
+
+	var userText = document.createTextNode(messageObject.user + ':');
+	var messageText = document.createTextNode(messageObject.message);
+
+
+	user.appendChild(userText);
+	message.appendChild(messageText);
+
+	user.className = 'userName';
+	message.className = 'chatMessage';
+
+	div.appendChild(user);
+	div.appendChild(message);
+
+	if(state){
+	div.className = 'chatMessage1';
+	state = false;
+	}
+	else{
+	div.className = 'chatMessage2';
+	state = true;
+	}
+
+
+	$("#chat_small").prepend(div);
+	//elementt.prependChild(div);
+};
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+</head>
+<body onload="checkConnections()">
+	
+<div class="container color_background nopad">
+
+		<!-- NavBar Starting -->
+
+<nav class="navbar navbar-default navbar-inverse default_nav">
+	<div class="container-fluid">
+<!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand text_decor_brand" href="#"><img src="newImage/smile_icon.png" class="ico"/>
+      	Table-Game-Portal
+      </a>
+    </div>	
+ <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+<ul class="nav nav-pills navbar-right">
+	<li id="home"role="presentation"><a href="javascript:slideStatusBar()"><span id="menu_status_bar">Show Status Bar</span></a></li>
+  <li id="home"role="presentation" ><a href="javascript:layerChange('/messages')">Messages</a></li>
+  <li id="guide"role="presentation"><a href="javascript:layerChange('/profile')">Profile</a></li>
+  <li id="guide"role="presentation"><a href="/logout">LogOut</a></li>
+</ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+					<!-- NavBar Finishing -->
+
+
+
+						<!-- Status Bar Starting -->
+
+<div id='status_bar'><p>Name:<%= user.local.email %></p></div>
+
+						<!-- Status Bar Finishing -->
+
+
+
+	<br/>
+
+
+
+<div class="container">
+
+
+					<!-- Side NavBar Starting -->
+
+				<div class="col-md-2">
+		<div class="custom_block center-block color_box"><h4 class="text-center">Navigate</h4>
+			<div class="centerp center-block">
+				<div class="list-group">
+
+
+
+  <a href="javascript:toggleMe('toggleh')"class="list-group-item color1"><h4 class="list-group-item-heading">Games</h4></a>   
+  
+  <div id="toggleh">
+  	<a href="#" class="list-group-item sub_item color1"><h5 class="list-group-item-heading">Game_1</h5></a>
+  <a href="#" class="list-group-item sub_item color1"><h5 class="list-group-item-heading">Game_2</h5></a>
+  </div>
+
+      <a href="javascript:toggleMe('togglecss')" class="list-group-item color4"><h4 class="list-group-item-heading">Stats</h4></a>
+        <div id="togglecss">
+   <a href="#" class="list-group-item sub_item color4"><h5 class="list-group-item-heading">Top 10 Game_1</h5></a>
+   <a href="#" class="list-group-item sub_item color4"><h5 class="list-group-item-heading">Top 10 Game_2</h5></a>
+   <a href="#" class="list-group-item sub_item color4"><h5 class="list-group-item-heading">Top Owerall Top</h5></a>
+  </div>
+
+      <a href="#" class="list-group-item color3"><h4 class="list-group-item-heading">Chat</h4></a>
+</div>
+				
+	</div></div>
+	</div>
+
+					<!-- Side NavBar Finishing -->
+
+
+
+
+					<!-- main info -->
+
+
+	<div id='mainGame'class="col-md-7">
+		<div class="custom_block center-block color_box"><h3 class="text-center">MainGameWindow</h3>
+			<div id='gameWindow' class="centerp center-block">
+			<p>There is plenty of tutorial pages around there in the web. This page is more about
+				programming language {guide}, some code snippets and few templates
+				for myself and whoever needs them, Enjoy! 
+				programming language {guide}, some code snippets and few templates
+				for myself and whoever needs them, Enjoy! 
+				programming language {guide}, some code snippets and few templates
+				for myself and whoever needs them, Enjoy! 
+				programming language {guide}, some code snippets and few templates
+				for myself and whoever needs them, Enjoy! 
+				programming language {guide}, some code snippets and few templates
+				for myself and whoever needs them, Enjoy!
+</p>
+</div></div>
+	</div>
+
+				<!-- otherWindow -->
+
+
+		<div id='mainProfile' class="col-md-7">
+		<div class="custom_block center-block color_box"><h3 class="text-center">MainGameWindow</h3>
+			<div id='gameWindow' class="centerp center-block">
+			<p>There is plenty of tutorial pages around there in the web. This page is more about
+				programming language {guide}, some code snippets and few templates
+				for myself and whoever needs them, Enjoy! 
+				programming language {guide}, some code snippets and few templates
+				for myself and whoever needs them, Enjoy! 
+				programming language {guide}, some code snippets and few templates
+				for myself and whoever needs them, Enjoy! 
+				programming language {guide}, some code snippets and few templates
+				for myself and whoever needs them, Enjoy! 
+				programming language {guide}, some code snippets and few templates
+				for myself and whoever needs them, Enjoy! 
+</p>
+</div></div>
+	</div>
+
+
+
+				<div class="col-md-3 clear right">
+		<div class="custom_block center-block color_box"><h4 class="text-center">UserList</h4>
+			<div class="centerp center-block">
+		<div id="user_list_small" style="height: 120px; overflow-y: scroll;">
+
+		</div>
+			</div>		
+	</div></div>
+
+
+
+	<div class="col-md-3 clear right">
+		<div class="custom_block center-block color_box"><h4 class="text-center">Chat</h4>
+			<div class="centerp center-block">
+				<div id="chat_small" style="height: 120px; overflow-y: scroll;">
+				</div>
+			</div>
+
+
+	<div class="input-group small_chat_input">
+      <input id='chatMessage' type="text" class="form-control" placeholder="Your Message Here">
+      <span class="input-group-btn">
+
+        <button onclick='sendMessage()' class="btn btn-default" type="button">Send</button>
+      </span>
+    </div>
+
+		</div>
+	</div>
+
+	</div>
+<footer class="text-center">
+	NCI Team 2015 C.
+<br/>
+</footer>
+</div>
+
+
+</body>
+</html>
