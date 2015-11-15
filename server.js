@@ -3,6 +3,7 @@
 // set up ======================================================================
 // get all the tools we need
 var express  = require('express'),
+ xslt     = require('node_xslt'),
  app      = express(),
  port     = process.env.PORT || 3001,
  mongoose = require('mongoose'),
