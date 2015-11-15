@@ -19,7 +19,11 @@
  	
 <!--My own Scripts-->
  	<script src="js/script.js" type="text/javascript"></script>
+ 	
 
+<!--Scripts For Card Game-->
+    <link href="card_game1/style_cards.css" rel="stylesheet" />
+    <script src="card_game1/display.js"></script>
 
 <script>
 var socket = io.connect('/');
@@ -140,11 +144,6 @@ var addMessage = function(messageObject){
 
 </script>
 
-
-
-
-
-
 </head>
 <body onload="checkConnections()">
 	
@@ -208,7 +207,7 @@ var addMessage = function(messageObject){
   <a href="javascript:toggleMe('toggleh')"class="list-group-item color1"><h4 class="list-group-item-heading">Games</h4></a>   
   
   <div id="toggleh">
-  	<a href="#" class="list-group-item sub_item color1"><h5 class="list-group-item-heading">Game_1</h5></a>
+  	<a href="javascript:layerChange('/cardGame1')" class="list-group-item sub_item color1"><h5 class="list-group-item-heading">CareGame1</h5></a>
   <a href="#" class="list-group-item sub_item color1"><h5 class="list-group-item-heading">Game_2</h5></a>
   </div>
 

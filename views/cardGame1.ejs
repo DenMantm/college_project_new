@@ -1,0 +1,110 @@
+
+    <script src="card_game1/display.js"></script>
+
+<div class="custom_block center-block color_box">
+  <div class='card_game_container center-block'>
+    <div id='body' onmousedown="whichElement(event)">
+
+
+
+      <div id="frontMenu" class="cent transp bradius">
+          <div id="fmenu">
+            <img class="banner" src="card_game1/img/banner.jpg"/>
+            <div id="form" class="cent">
+              <br/>
+              <br/>
+
+              <h3 onclick="newgame(), slide()" class="border btn_start textcent" id="info">- New Game -</h3>
+            <table class="tableMenu">
+              <tr>
+
+              </tr>
+                            <tr>
+                <td><span>Expanations:</span></td>
+                <td><input type="checkbox" id="notify" value="true"checked></td>
+              </tr>
+            </table>
+            </div>
+      </div>
+  </div>
+
+
+  <br/>
+
+
+
+    <div id="main" class="cent ">
+
+      <h5 class="textcent h5" id="status1">Status Goes Here</h5>
+      <h5 class="textcent h5" id="status">Status Goes Here</h5>
+      <div class="cent board transp">
+        
+
+        <div id="div1">
+        </div>
+ 
+      </div>
+
+      <div id="div2" class="cent transp">
+
+        <div id="div4">
+        </div>
+        
+        <div id="div5">
+        <h4 class="cards_left h4"><span id="cardsLeft">-</span></h4>
+        </div>
+
+      </div>
+      <div class="cent board transp">
+      <div class="xmenu" id="mainMenu">
+      </div>
+
+      <div id="div3"></div>
+      </div>
+        <h8 class="textcent" id="message_stats">Status Goes Here</h8>
+           <div class='results'> 
+      <div class="player_inf transp move_main">
+        <p id="playerN" class="textcent">---</p>
+      <p class="textcent">Wins:<span id="playerWon">0</span></p>
+      </div>
+      
+          <div class="player_inf transp move_main">
+          <p class="textcent">COMPUTER</p>
+          <p class="textcent">Wins:<span id="computerWon">0</span></p>
+        </div>
+      
+    </div>
+    </div>
+
+
+
+
+
+    <div id="endMenu" class="cent transp bradius">
+      <h2 class="textcent down" id="end_info">Congratulations, You Won!</h2>
+      <div id="prompt"class="cent">     
+                <h1 class="uphead">Score:</h1>
+          <div class="player_inf transp end_computer">
+          <h4 class="textcent h4">COMPUTER</h4>
+          <h4 class="textcent h4">Wins:<span id="end_computerWon"></span></h4>
+        </div>
+
+
+        <div class="player_inf transp end_player">
+        <h4 id="playerNn h4" class="textcent">---</h4>
+      <h4 class="textcent h4">Wins:<span id="end_playerWon"></span></h4>
+      </div>
+      
+      <div onclick="exitToMenu()" class="border end_button"><h3 class="end_button_h"> - Exit to Menu - </h3>
+      </div>
+            <div onclick="restart()" class="border end_button end_button_right"><h3 class="end_button_h">
+          - Next Round -</h3>
+      </div>
+
+      </div>
+    </div>
+
+</div>
+</div>
+</div>
+<script>frontSlide();</script>

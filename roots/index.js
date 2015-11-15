@@ -8,7 +8,14 @@ module.exports = function(app, passport) {
 			user : req.user // get the user out of session and pass to template
 		});
 	});
+			//RETURNS cardGame1
 
+			app.get('/cardGame1', isLoggedIn, function(req, res) {
+
+		res.render('cardGame1.ejs', {
+			user : req.user // get the user out of session and pass to template
+		});
+	});
 
 			//returns parts of the page
 		app.get('/profile', isLoggedIn, function(req, res) {
