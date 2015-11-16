@@ -1,13 +1,35 @@
+	var xslt_transform = require('../engine/xslt_transform.js');
 
 module.exports = function(app, passport) {
 
-	
 		app.get('/', isLoggedIn, function(req, res) {
 
 		res.render('shell.ejs', {
 			user : req.user // get the user out of session and pass to template
 		});
 	});
+			
+			//XSLT return to the user ON REQUEST
+			
+		app.get('/sent', isLoggedIn, function(req, res) {
+		
+		var paths = './xmlStorage/'+req.user.local.email+'.xml';
+		var transform = './xsltStorage/sent.xsl';
+		res.send(xslt_transform(transform,paths));
+
+		
+	});
+	
+			app.get('/recieved', isLoggedIn, function(req, res) {
+		var paths = './xmlStorage/'+req.user.local.email+'.xml';
+		var transform = './xsltStorage/recieved.xsl';
+		res.send(xslt_transform(transform,paths));
+
+		
+	});
+			
+			
+	
 			//RETURNS cardGame1
 
 			app.get('/cardGame1', isLoggedIn, function(req, res) {

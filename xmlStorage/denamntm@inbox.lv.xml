@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><messages>
+
+<recieved>
+    <text>Recieved message text here</text>
+    <user>UserNameHere</user>
+    <date>01/30/2015</date>
+</recieved>
+
+<recieved>
+    <text>Recieved message text here</text>
+    <user>UserNameHere</user>
+    <date>03/20/2015</date>
+</recieved>
+
+<recieved>
+    <text>Recieved message text here</text>
+    <user>UserNameHere</user>
+    <date>02/30/2015</date>
+</recieved>
+
+<sent>
+    <text>Sent message text here</text>
+    <user>UserNameHere</user>
+    <date>01/20/2015</date>
+</sent>
+    
+    
+</messages>

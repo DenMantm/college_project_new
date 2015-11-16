@@ -1,24 +1,32 @@
 <div class="custom_block center-block color_box"><h3 class="text-center">Messages</h3>
 			<div id='gameWindow' class="centerp center-block">
-<div class="dropup left">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Menu
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Inbox</a></li>
-            <li role="presentation" class="divider"></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sent</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Send Message</a></li>
-    </ul>
-  </div>
-  <h4 class='left' id='main_messages_where'>###########<h4>
-<div id='main_message_div'>
-	</div>
+
+
+<div class="btn-group" role="group" aria-label="...">
+  <button id='msg_inbox' type="button" class="btn btn-default">Inbox</button>
+  <button id='msg_sent'type="button" class="btn btn-default">Sent</button>
+  <button id='msg_new' type="button" class="btn btn-default">Send Message</button>
+</div>
+  
+  <br/>
+  <br/>
+  
+<div id='main_message_div'></div>
+
 </div></div>
 	</div>
 <script>
+//Event handlers for button
+	simpleAjax('/recieved','main_message_div');
+	     $("#msg_sent").click(function(){
+    simpleAjax('/sent','main_message_div');
+});
+	     $("#msg_inbox").click(function(){
+    simpleAjax('/recieved','main_message_div');
+});
+
 	
-	
-	
+
 </script>	
 	
 	

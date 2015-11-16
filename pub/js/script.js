@@ -21,10 +21,8 @@ var slideStatusBar = function(){
 //changeLayers
 var helper = 'second';
 var layerChange =function(url){
-
     //login_form, singup_form
     if(helper == 'second'){
-
     	    $.ajax({url: url, success: function(result){
         $("#mainGame").html(result);
    		 }});
@@ -36,19 +34,12 @@ var layerChange =function(url){
       }, 1000);
       helper = 'first';
     }
-
-
-
     else{
 
 
     	$.ajax({url: url, success: function(result){
         $("#mainProfile").html(result);
     	}});
-
-
-
-
       $("#mainGame").slideToggle("slow");
       setTimeout(function(){
       $("#mainProfile").slideToggle("slow");
@@ -62,7 +53,10 @@ var layerChange =function(url){
 
 
 //fill necesarry fields in the app::
-function fillInfo(){
+function simpleAjax(url,div){
+        	    $.ajax({url: url, success: function(result){
+        $("#"+div).html(result);
+   		 }});
 
 };
 
