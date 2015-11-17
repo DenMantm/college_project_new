@@ -1,0 +1,36 @@
+<div class='border'>
+    <h3>New Message</h3>
+    <p>(has to be existing registered usere e-mail)</p>
+    <h3>To User: <input id='to_user' type="text" name="fname"></h3>
+    <h3>Message:</h3>
+    <textarea id='message_text' rows="6" cols="50">Your Message Here</textarea>
+    <br/>
+    <button id='send_message'>send</button>
+</div>
+
+<script>
+$( "#send_message" ).click(function() {
+
+var message_text = document.getElementById('message_text').value,
+         to_user = document.getElementById('to_user').value;
+                   document.getElementById('to_user').value = '';
+                   document.getElementById('message_text').value = '';
+
+var messageObj = {message:message_text,user:to_user};
+
+        $.post("/sendMessageToUser",
+        {
+          message: messageObj
+        },
+        function(data,status){ 
+            if(data == 'noFile'){
+            alert('User doesnt exist yet, please chose other user');
+          }
+          if(data== 'success'){
+              alert('Success, message sent!');
+          }
+
+        });
+
+});
+</script>

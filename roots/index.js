@@ -1,4 +1,7 @@
-	var xslt_transform = require('../engine/xslt_transform.js');
+	//required to transform
+	var xslt_transform = require('../engine/xslt_transform.js'),
+	            tryxml = require('../engine/xml_save.js'),
+	            fs = require('fs');
 
 module.exports = function(app, passport) {
 
@@ -9,10 +12,38 @@ module.exports = function(app, passport) {
 		});
 	});
 			
+			//XML HANDLING 
+	
+	app.post('/sendMessageToUser', function(req, res) {
+
+    var message = req.body.message;
+    console.log(message);
+    var paths_sender = './xmlStorage/'+req.user.local.email+'.xml';
+    var paths_reciever = './xmlStorage/'+message.user+'.xml';
+
+    console.log(paths_sender);
+    console.log(paths_reciever);
+
+        fs.exists(paths_reciever, function(exists){
+        if (exists) {
+		
+    tryxml('sent',        paths_sender,     message.to_user,            message.message);
+    tryxml('recieved',    paths_reciever,   req.user.local.email,       message.message);
+    res.send('success');
+         }
+          else{
+		res.send('noFile');
+
+}
+
+}); 
+        
+ 
+});
+    
 			//XSLT return to the user ON REQUEST
 			
 		app.get('/sent', isLoggedIn, function(req, res) {
-		
 		var paths = './xmlStorage/'+req.user.local.email+'.xml';
 		var transform = './xsltStorage/sent.xsl';
 		res.send(xslt_transform(transform,paths));
@@ -27,7 +58,11 @@ module.exports = function(app, passport) {
 
 		
 	});
+			//RETURNING SENDING FORM
 			
+	app.get('/sendMessage', isLoggedIn, function(req, res) {
+		res.render('sendMessage.ejs');
+	});
 			
 	
 			//RETURNS cardGame1

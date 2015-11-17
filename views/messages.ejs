@@ -24,8 +24,9 @@
 	     $("#msg_inbox").click(function(){
     simpleAjax('/recieved','main_message_div');
 });
-
-	
+	     $("#msg_new").click(function(){
+    simpleAjax('/sendMessage','main_message_div');
+});
 
 </script>	
 	

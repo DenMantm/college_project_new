@@ -37,6 +37,15 @@ app.configure(function() {
 });
 
 
+     //FOR POST XML REQUESTS BODY PARSER
+
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+
 //array for users
 var clients = {};
 function handleIO(socket){
@@ -92,8 +101,6 @@ function handleIO(socket){
 	}
 		socket.broadcast.emit('update-list',clients);
 	};
-
-
 
 
 
