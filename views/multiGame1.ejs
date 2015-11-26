@@ -1,0 +1,29 @@
+<div>
+    <h2>Game1</h2>
+    To Whom send request: <input id='to_user' type="text" name="fname">
+     <button id='SendRequest'>send request</button>
+    <script>
+   $( "#SendRequest" ).click(function() {
+    var req_user = document.getElementById('to_user').value;
+    var game = 'multiGame1';
+    var obj_inv = {game:game, user:req_user, from:user};
+    console.log(obj_inv);
+    socket.emit('inviteUser',obj_inv);
+    return;
+    });
+    socket.on('inviteStatus',function(status){
+        if(status === 'noUser'){
+            alert('noUser');
+            return;
+        }
+        if(status === 'reject'){
+            alert('reject');
+            return;
+        }
+        if(status==='accept'){
+            alert('accept');
+            return;
+        }
+    });
+    </script>
+</div>

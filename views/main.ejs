@@ -73,12 +73,28 @@ var node = document.createTextNode(keys[i]);
 para.appendChild(node);
 div.appendChild(para);
 
-
-
     	}
 element.appendChild(div);
 
 });
+
+socket.on("disconnect",function(){
+	console.log('disconnected');
+});
+
+//¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬RECIEVING INVITE TO JOIN CHAT ROOM¬¬¬¬¬¬¬¬¬¬¬¬¬
+socket.on('invite',function(invite){
+	console.log(invite);
+	var some = confirm(invite.from +' is sending you invite for a game '+invite.game);
+	if (some) {
+    socket.emit('inviteStatusFromUser', {type:'accept',user:invite.from});
+    console.log('accepting');
+	} else {
+    socket.emit('inviteStatusFromUser', {type:'reject',user:invite.from});
+    console.log('denied');
+	}
+})
+
 //~~~~~~~~~~~~~~~~~~~For Chat~~~~~~~~~~~~~#
 
 var sendMessage = function(){
@@ -210,8 +226,8 @@ var addMessage = function(messageObject){
   <a href="javascript:toggleMe('toggleh')"class="list-group-item color1"><h4 class="list-group-item-heading">Games</h4></a>   
   
   <div id="toggleh">
-  	<a href="javascript:layerChange('/cardGame1')" class="list-group-item sub_item color1"><h5 class="list-group-item-heading">CareGame1</h5></a>
-  <a href="#" class="list-group-item sub_item color1"><h5 class="list-group-item-heading">Game_2</h5></a>
+  	<a href="javascript:layerChange('/cardGame1')" class="list-group-item sub_item color1"><h5 class="list-group-item-heading">CardGame1</h5></a>
+  <a href="javascript:layerChange('/multiGame1')" class="list-group-item sub_item color1"><h5 class="list-group-item-heading">Game_1</h5></a>
   </div>
 
       <a href="javascript:toggleMe('togglecss')" class="list-group-item color4"><h4 class="list-group-item-heading">Stats</h4></a>
@@ -236,45 +252,18 @@ var addMessage = function(messageObject){
 
 
 	<div id='mainGame'class="col-md-7">
-		<div class="custom_block center-block color_box"><h3 class="text-center">MainGameWindow</h3>
+		<div class="custom_block center-block color_box"><h3 class="text-center">Loading...</h3>
 			<div id='gameWindow' class="centerp center-block">
-			<p>There is plenty of tutorial pages around there in the web. This page is more about
-				programming language {guide}, some code snippets and few templates
-				for myself and whoever needs them, Enjoy! 
-				programming language {guide}, some code snippets and few templates
-				for myself and whoever needs them, Enjoy! 
-				programming language {guide}, some code snippets and few templates
-				for myself and whoever needs them, Enjoy! 
-				programming language {guide}, some code snippets and few templates
-				for myself and whoever needs them, Enjoy! 
-				programming language {guide}, some code snippets and few templates
-				for myself and whoever needs them, Enjoy!
-</p>
+			
 </div></div>
 	</div>
 
 				<!-- otherWindow -->
-
-
 		<div id='mainProfile' class="col-md-7">
-		<div class="custom_block center-block color_box"><h3 class="text-center">MainGameWindow</h3>
+		<div class="custom_block center-block color_box"><h3 class="text-center">Loading...</h3>
 			<div id='gameWindow' class="centerp center-block">
-			<p>There is plenty of tutorial pages around there in the web. This page is more about
-				programming language {guide}, some code snippets and few templates
-				for myself and whoever needs them, Enjoy! 
-				programming language {guide}, some code snippets and few templates
-				for myself and whoever needs them, Enjoy! 
-				programming language {guide}, some code snippets and few templates
-				for myself and whoever needs them, Enjoy! 
-				programming language {guide}, some code snippets and few templates
-				for myself and whoever needs them, Enjoy! 
-				programming language {guide}, some code snippets and few templates
-				for myself and whoever needs them, Enjoy! 
-</p>
 </div></div>
 	</div>
-
-
 
 				<div class="col-md-3 clear right">
 		<div class="custom_block center-block color_box"><h4 class="text-center">UserList</h4>
@@ -291,8 +280,6 @@ var addMessage = function(messageObject){
       </span>
     </div>
 	</div></div>
-
-
 
 	<div class="col-md-3 clear right">
 		<div class="custom_block center-block color_box"><h4 class="text-center">Chat</h4>

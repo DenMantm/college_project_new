@@ -20,12 +20,10 @@ var createMessage = function(text,user,what){
   textEl.appendChild(textTxt);
   element.appendChild(textEl);
 
-
   var fromEl = doc.createElement("user");
   var fromTxt = doc.createTextNode(user);
   fromEl.appendChild(fromTxt);
   element.appendChild(fromEl);
-
 
 
    var dateEl = doc.createElement("date");
@@ -35,7 +33,6 @@ var createMessage = function(text,user,what){
 
 
   genres = doc.documentElement.appendChild(element);
-
 }
 
 createMessage(message,user,what);

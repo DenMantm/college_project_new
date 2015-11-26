@@ -6,7 +6,6 @@
 module.exports = function(app, passport) {
 
 		app.get('/', isLoggedIn, function(req, res) {
-
 		res.render('shell.ejs', {
 			user : req.user // get the user out of session and pass to template
 		});
@@ -42,7 +41,6 @@ module.exports = function(app, passport) {
 });
     
 			//XSLT return to the user ON REQUEST
-			
 		app.get('/sent', isLoggedIn, function(req, res) {
 		var paths = './xmlStorage/'+req.user.local.email+'.xml';
 		var transform = './xsltStorage/sent.xsl';
@@ -73,6 +71,10 @@ module.exports = function(app, passport) {
 			user : req.user // get the user out of session and pass to template
 		});
 	});
+		//RETURNS multiGame1
+		app.get('/multiGame1', isLoggedIn, function(req, res) {
+		res.render('multiGame1.ejs');
+	});
 
 			//returns parts of the page
 		app.get('/profile', isLoggedIn, function(req, res) {
@@ -89,39 +91,28 @@ module.exports = function(app, passport) {
 
 		//socket io test
 				app.get('/socket', isLoggedIn, function(req, res) {
-
 				//var nickName = req.user;
 				//nickName = nickName.local.email
-				
 		res.render('socket.ejs',{
 			user : req.user // get the user out of session and pass to template
 		});
 	});
-
-
-
 	app.get('/main', isLoggedIn, function(req, res) {
 		console.log(req.user);
 		res.render('main.ejs', {
 			user : req.user // get the user out of session and pass to template
 		});
 	});
-
-
 	app.get('/login', function(req, res) {
 		// render the page and pass in any flash data if it exists
 		res.render('login.ejs', { message: req.flash('loginMessage') });
 	});
-
-
 	// process the login form
 	app.post('/login', passport.authenticate('local-login', {
 		successRedirect : '/', // redirect to the secure profile section
 		failureRedirect : '/login', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
-
-
 	// process the signup form
 	app.post('/signup', passport.authenticate('local-signup', {
 		successRedirect : '/', // redirect to the secure profile section

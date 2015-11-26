@@ -19,7 +19,6 @@ module.exports = function(passport) {
             done(err, user);
         });
     });
-
  	// =========================================================================
     // LOCAL SIGNUP ============================================================
     // =========================================================================
@@ -56,6 +55,7 @@ module.exports = function(passport) {
             
             
                      //Just adding code to generate new XML file for our messages
+                     
                 var name = email,
                     fs = require('fs'),
                     paths = './xmlStorage/'+name+'.xml',

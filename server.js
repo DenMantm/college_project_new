@@ -11,7 +11,7 @@ var express  = require('express'),
  flash    = require('connect-flash'),
  http     = require('http'),
  path     = require('path'),
-// io       = require('socket.io'),
+ ioReal       = require('socket.io'),
  configDB = require('./db'),
  reg      = require('./engine/regsocket');
 
@@ -72,14 +72,37 @@ function handleIO(socket){
     					
 					})
 
+				socket.on('inviteUser',function(invite){
+					
+					if(clients[invite.user]===undefined){
+						socket.emit('inviteStatus','noUser');
+						return;
+					}
+					//sending request to certain person::
+					console.log('USER TO INVITE: '+ clients[invite.user].socket);
+					console.log(invite);
 
-	                 
+					//send invite to the user
+					io.to(clients[invite.user].socket).emit("invite", invite);
 
-
+					socket.on('inviteStatusFromUser',function(answer){
+						if(answer.type ==='accept'){
+							console.log('accepting');
+						io.to(clients[answer.user].socket).emit('inviteStatus','accept');
+						return;
+						}
+						if(answer.type === 'reject'){
+							console.log('reject');
+						io.to(clients[answer.user].socket).emit('inviteStatus','reject');
+						return;
+						}
+					});	
+					
+					
+				})       
+			
+				
 	                 //when requireing userlist presenting it
-
-
-
 
 	socket.on('user-list',function(){
 		                   //if new user connects, emmit userlist
@@ -102,9 +125,6 @@ function handleIO(socket){
 		socket.broadcast.emit('update-list',clients);
 	};
 
-
-
-
 	console.log("connected");
 	//whenever client disconnected
 	socket.on("disconnect",disconnect);
@@ -112,14 +132,10 @@ function handleIO(socket){
 
 var server = app.listen(port);
 var io = require('socket.io').listen(server);
-
 //requireing debug messages to go away
 //io.set('log level', 1);
-
 //event listner on connection fires funct
 io.on("connection",handleIO);
-
-
 
 // routes ======================================================================
 require('./roots')(app, passport); // load our routes and pass in our app and fully configured passport
